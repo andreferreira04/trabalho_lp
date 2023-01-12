@@ -135,7 +135,6 @@ void menuPrincipal() {
 
 int main() {
     importExcel(&produtos, &materiais);
-    printf("OLA GITHUB");
     
     //loadProdutos(&produtos);
     loadEncomendas(&encomendas);
