@@ -135,6 +135,7 @@ void menuPrincipal() {
 
 int main() {
     importExcel(&produtos, &materiais);
+
     
     //loadProdutos(&produtos);
     loadEncomendas(&encomendas);
