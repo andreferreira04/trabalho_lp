@@ -1,0 +1,3 @@
+P00001;Movel WC ;80x120x60;99;1
+P00002;Cómoda 3 Gavetas ;160x120x60;299;1
+P00003;Mesa de Cabeçeira ;60x60x60;149;1
