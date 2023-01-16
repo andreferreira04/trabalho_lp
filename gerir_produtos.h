@@ -43,7 +43,7 @@ typedef struct {
 } Produtos;
 
 typedef struct {
-    int idCliente;
+    char idCliente[7];
     char idProduto[7];
     char data[10];
 } Encomenda;
