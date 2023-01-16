@@ -63,10 +63,11 @@ int procurarEncomenda(char *idProduto, Encomendas encomendas) {
 void listarProduto (Produto produto) {
     if (produto.estado == 1) {
         printf("%s: \n\tNome: %s \n\tDimensoes: %s \n\tPreco: %d\n", produto.idProduto, produto.nomeProduto, produto.dimensoesProduto, produto.precoProduto);
-        printf("Materiais: ");
+        printf("\tMateriais: ");
         for (int i = 0; i < produto.numMateriais; i++) {
             printf("%s ", produto.materiais[i]);
         }
+        printf("\n\n");
     }
 }
 
@@ -190,7 +191,7 @@ void loadProdutos (Produtos *produtos) {
  * @param encomendas apontador do tipo Encomendas
  */
 void loadEncomendas (Encomendas *encomendas) {
-    int i = 0, count = 0;
+    int param = 0, count = 0;
     FILE * fp;
     char * line = NULL;
     size_t len = 0;
@@ -201,18 +202,23 @@ void loadEncomendas (Encomendas *encomendas) {
         exit(EXIT_FAILURE);
 
     while ((read = getline(&line, &len, fp)) != -1) {
+        param = 0;
         char *delim = DELIMITADOR;
         char *token = strtok(line,delim);
-        i = 0;
-        
-        while(token != NULL) {
-            switch (i) {
-                case 0: encomendas->encomenda[count].idCliente = atoi(token);
-                case 1: strncpy(encomendas->encomenda[count].idProduto, token, 20);
-                case 2: strncpy(encomendas->encomenda[count].data, token, 20);
+        while (token != NULL) {
+            switch (param) {
+                case 0: 
+                    strlcpy(encomendas->encomenda[count].idCliente, token, TAM_IDCLIENTE);
+                    break;
+                case 1:
+                    strlcpy(encomendas->encomenda[count].idProduto, token, TAM_IDPRODUTO);
+                    break;
+                case 2:
+                    strlcpy(encomendas->encomenda[count].data, token, 10);
+                    break;
             }
+            param++;
             token = strtok(NULL, delim);
-            i++;
         }
         count++;
     }
@@ -252,9 +258,8 @@ void uploadEncomendas (Encomendas *encomendas) {
         printf("Erro a abrir o ficheiro.\n");
         return;
     }
-
     for (int i = 0; i < encomendas->numEncomendas; i++) {
-        fprintf(encomendas_file, "%d;%s;%s", encomendas->encomenda[i].idCliente, encomendas->encomenda[i].idProduto, encomendas->encomenda[i].data);
+        fprintf(encomendas_file, "%s;%s;%s\n", encomendas->encomenda[i].idCliente, encomendas->encomenda[i].idProduto, encomendas->encomenda[i].data);
     }
     fclose(encomendas_file);
 }
@@ -265,20 +270,17 @@ void uploadEncomendas (Encomendas *encomendas) {
  * @param produtos struct do tipo de dados Produtos para listar os produtos disponiveis
  * @param encomendas struct do tipo de dados Encomendas para registar a encomenda
  */
-void registarEncomenda (Produtos produtos, Encomendas encomendas) {    
-    int idCliente, dd, mm, yy;
-    char idProduto[TAM_IDPRODUTO];
+void registarEncomenda (Produtos produtos, Encomendas *encomendas) {    
+    int dd, mm, yy;
+    char idProduto[TAM_IDPRODUTO], idCliente[TAM_IDCLIENTE];
 
-    idCliente = obterInt("Escreva o ID do cliente: ", 1, 9999999);
-    if (idCliente == 0) {
-        return;
-    }
+    lerString(idCliente, TAM_IDCLIENTE, "Escreva o ID do cliente: ");
 
-    printf("Escreva a data da encomenda (DD/MM/AAAA):");
-    scanf("%d/%d/%d", &dd, &mm, &yy);
-    if (!verificaData(dd, mm, yy)) {
-        return;
-    }
+    do {
+        printf("Escreva a data da encomenda (DD/MM/AAAA):");
+        scanf("%d/%d/%d", &dd, &mm, &yy);
+    } while (!verificaData(dd, mm, yy));
+    
 
     listarProdutos(produtos);
     
@@ -295,12 +297,14 @@ void registarEncomenda (Produtos produtos, Encomendas encomendas) {
             //se o produto existir
             if (procurarProduto(idProduto, produtos) == 1) {                
                 char data[10];
+                
                 sprintf(data, "%d/%d/%d", dd,mm,yy);
-
-                encomendas.encomenda[encomendas.numEncomendas].idCliente = idCliente;
-                strcpy(encomendas.encomenda[encomendas.numEncomendas].idProduto, idProduto);
-                strcpy(encomendas.encomenda[encomendas.numEncomendas].data, data);
-                encomendas.numEncomendas++;
+                
+                strlcpy(encomendas->encomenda[encomendas->numEncomendas].idCliente, idCliente, TAM_IDCLIENTE);
+                strlcpy(encomendas->encomenda[encomendas->numEncomendas].idProduto, idProduto, TAM_IDPRODUTO);
+                strlcpy(encomendas->encomenda[encomendas->numEncomendas].data, data, 10);
+                
+                encomendas->numEncomendas++;
             }
         }
     } while (idProduto[0] != '0');

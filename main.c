@@ -24,15 +24,15 @@
                                 " de encomendas(por semana)\n2.Retroceder\n0.Sair\nSelecione uma opcao (0-2):"
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
 
-//Produtos produtos = {};
-Produtos *produtos = (Produtos*) malloc(MAX_PRODUTOS * sizeof(Produtos));
+Produtos produtos = {};
+//Produtos *produtos = (Produtos*) malloc(MAX_PRODUTOS * sizeof(Produtos));
 Encomendas encomendas = {};
 Material materiais = {};
 
 void menuCliente() {
     switch (obterInt(MENU_CLIENTE_MSG, 0, 1)) {
         case 1:
-            registarEncomenda(produtos, encomendas);
+            registarEncomenda(produtos, &encomendas);
             break;
         case 0:
             return;
@@ -44,13 +44,13 @@ void menuCliente() {
 void menuGerirClientes() {
     switch (obterInt(MENU_GERIR_CLIENTES_MSG, 0, 4)) {
         case 1:
-            criarCliente();
+            //criarCliente();
             break;
         case 2:
-            editarCliente();
+            //editarCliente();
             break;
         case 3:
-            removerCliente();
+            //removerCliente();
             break;
         case 4:
             //menuAdmin();
@@ -135,13 +135,11 @@ void menuPrincipal() {
 
 int main() {
     importExcel(&produtos, &materiais);
-    printf("ssss");
     
     //loadProdutos(&produtos);
     loadEncomendas(&encomendas);
     
     menuPrincipal();
-
     
     uploadProdutos(&produtos);
     uploadEncomendas(&encomendas);

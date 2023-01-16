@@ -16,6 +16,7 @@
 #define PRINTF_REG_ENCOMENDA "Escreva os ID´s dos produtos. Digite '0' para terminar.\n"
 #define PRINTF_REM_PRODUTO "Escreva o ID do produto que deseja remover. Escreva '0' para sair.\n"
 #define TAM_IDPRODUTO 7
+#define TAM_IDCLIENTE 8
 #define TAM_MATERIAL 7
 #define DELIMITADOR ";"
 
@@ -28,7 +29,7 @@ typedef struct {
 } Material;
 
 typedef struct {
-    char idProduto[7];
+    char idProduto[TAM_IDPRODUTO];
     char nomeProduto[30];
     char dimensoesProduto[20];
     int precoProduto;
@@ -43,8 +44,8 @@ typedef struct {
 } Produtos;
 
 typedef struct {
-    char idCliente[7];
-    char idProduto[7];
+    char idCliente[TAM_IDCLIENTE];
+    char idProduto[TAM_IDPRODUTO];
     char data[10];
 } Encomenda;
 
@@ -70,7 +71,7 @@ void loadEncomendas(Encomendas *encomendas);
 void uploadProdutos(Produtos *produtos);
 void uploadEncomendas(Encomendas *encomendas);
 
-void registarEncomenda(Produtos produtos, Encomendas encomendas);
+void registarEncomenda(Produtos produtos, Encomendas *encomendas);
 
 void importExcel(Produtos *produtos, Material *material);
 
