@@ -116,6 +116,11 @@ void editarCliente(Clientes *clientes) {
     printf(PRINTF_EDIT_CLIENTE);
 
     lerString(idCliente, MAX_ID_CLIENTE, "");
+    
+    if (idCliente[0] != '0') {
+        //converter para maiusculas
+        for (int i = 0; idCliente[i] != '\0'; i++)
+            idCliente[i] = toupper(idCliente[i]);
 
     if (procurarCliente(idCliente, *clientes) == 1) { // se o cliente existir
         int pos = obterPosicaoCliente(idCliente, *clientes);
@@ -133,6 +138,7 @@ void editarCliente(Clientes *clientes) {
     } else {
         printf("Nao e possivel editar");
     }
+  }
 }
 
 /**
