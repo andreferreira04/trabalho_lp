@@ -16,10 +16,10 @@
 #define MENU_CLIENTE_MSG "----------\nMenu do cliente\n----------\n1.Registar encomenda\n0.Sair\n"\
                          "Selecione uma opcao (0-1):"
 #define MENU_GERIR_CLIENTES_MSG "----------\nGestao de clientes\n----------\n1.Criar cliente\n"\
-                                "2.Editar cliente\n3.Remover cliente\n4.Retroceder\n0.Sair\n"\
+                                "2.Editar cliente\n3.Remover cliente\n4.Guardar alteracoes\n0.Sair\n"\
                                 "Selecione uma opcao (0-4):"
 #define MENU_GERIR_PRODUTOS_MSG "----------\nGestao de produtos\n----------\n1.Editar produto\n"\
-                                "2.Remover produto\n3.Retroceder\n0.Sair\nSelecione uma opcao (0-3):"
+                                "2.Remover produto\n3.Guardar alteracoes\n0.Sair\nSelecione uma opcao (0-3):"
 #define MENU_GERIR_PRODUCAO_MSG "----------\nGestao da producao\n----------\n1.Obter lista de componentes"\
                                 " de encomendas(por semana)\n2.Retroceder\n0.Sair\nSelecione uma opcao (0-2):"
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
@@ -54,7 +54,7 @@ void menuGerirClientes() {
             removerCliente(&clientes, encomendas);
             break;
         case 4:
-            //menuAdmin();
+            uploadClientes(&clientes);
         case 0:
             return;
         default:
@@ -71,7 +71,7 @@ void menuGerirProdutos() {
             removerProduto(&produtos, encomendas);
             break;
         case 3:
-            //menuAdmin();
+            uploadProdutos(&produtos);
             break;
         case 0:
             return;
@@ -143,8 +143,6 @@ int main() {
     
     menuPrincipal();
     
-    uploadClientes(&clientes);
-    uploadProdutos(&produtos);
     uploadEncomendas(&encomendas);
     
     return 0;
