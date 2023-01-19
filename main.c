@@ -28,7 +28,7 @@ Produtos produtos = {};
 //Produtos *produtos = (Produtos*) malloc(MAX_PRODUTOS * sizeof(Produtos));
 Encomendas encomendas = {};
 Material materiais = {};
-Clientes clientes ={};
+Clientes clientes = {};
 
 void menuCliente() {
     switch (obterInt(MENU_CLIENTE_MSG, 0, 1)) {
