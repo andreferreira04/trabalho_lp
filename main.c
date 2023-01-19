@@ -28,6 +28,7 @@ Produtos produtos = {};
 //Produtos *produtos = (Produtos*) malloc(MAX_PRODUTOS * sizeof(Produtos));
 Encomendas encomendas = {};
 Material materiais = {};
+Clientes clientes ={};
 
 void menuCliente() {
     switch (obterInt(MENU_CLIENTE_MSG, 0, 1)) {
@@ -136,11 +137,13 @@ void menuPrincipal() {
 int main() {
     importExcel(&produtos, &materiais);
     
+    loadClientes(&clientes);
     //loadProdutos(&produtos);
     loadEncomendas(&encomendas);
     
     menuPrincipal();
     
+    uploadClientes(&clientes);
     uploadProdutos(&produtos);
     uploadEncomendas(&encomendas);
     
