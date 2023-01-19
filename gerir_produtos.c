@@ -7,6 +7,8 @@
 #include "input.h"
 #include "gerir_produtos.h"
 
+extern int tam_struct_produtos;
+
 /**
  * Esta função procura se um certo produto existe
  * 
@@ -54,6 +56,12 @@ int procurarEncomenda(char *idProduto, Encomendas encomendas) {
     }
     return 0;
 }
+
+void reallocProdutos(Produtos *produtos) {
+    tam_struct_produtos = produtos->numProdutos + MAX_PRODUTOS;
+    produtos->produto = (Produto*) realloc(produtos->produto, tam_struct_produtos * sizeof(Produto));
+}
+
 
 /**
  * A função recebe um dado do tipo Produto e lista as suas informações
@@ -133,6 +141,8 @@ void editarProduto(Produtos *produtos) {
     sprintf(tmpstr, "%d", produtos->numProdutos);
     strlcat(print_opcao, tmpstr, 30);
     strlcat(print_opcao, ") (Escreva '0' para sair): ", 60);
+    
+    printf("%d", produtos->numProdutos);
     
     int opcao = obterInt(print_opcao, 0, produtos->numProdutos) - 1;
     
@@ -366,6 +376,11 @@ void importExcel(Produtos *produtos, Material *material) {
             }
             count_produtos++;
             count_materiais++;
+            produtos->numProdutos = count_produtos;
+                 
+            if (count_produtos == tam_struct_produtos) {
+                reallocProdutos(produtos);
+            }
         }
         
         else if (line[4] == 'M') {

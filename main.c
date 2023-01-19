@@ -24,8 +24,10 @@
                                 " de encomendas(por semana)\n0.Sair\nSelecione uma opcao (0-2):"
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
 
+
+int tam_struct_produtos = MAX_PRODUTOS;
 Produtos produtos = {};
-//Produtos *produtos = (Produtos*) malloc(MAX_PRODUTOS * sizeof(Produtos));
+//Produtos *produtos;
 Encomendas encomendas = {};
 Material materiais = {};
 Clientes clientes = {};
@@ -132,7 +134,11 @@ void menuPrincipal() {
 }
 
 int main() {
+    produtos.produto = (Produto *) malloc(MAX_PRODUTOS * sizeof(Produto));
+    
+    
     importExcel(&produtos, &materiais);
+        
     
     loadClientes(&clientes);
     //loadProdutos(&produtos);
@@ -141,6 +147,8 @@ int main() {
     menuPrincipal();
     
     uploadEncomendas(&encomendas);
+    
+    free(produtos.produto);
     
     return 0;
 }

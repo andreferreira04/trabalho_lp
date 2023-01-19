@@ -8,7 +8,7 @@
 #ifndef GERIR_PRODUTOS_H
 #define GERIR_PRODUTOS_H
 
-#define MAX_PRODUTOS 30
+#define MAX_PRODUTOS 2
 #define MAX_ENCOMENDAS 30
 #define NUM_MATERIAIS 20
 
@@ -40,7 +40,7 @@ typedef struct {
 
 typedef struct {
     int numProdutos;
-    Produto produto[MAX_PRODUTOS];
+    Produto *produto;
 } Produtos;
 
 typedef struct {
@@ -58,6 +58,8 @@ typedef struct {
 int procurarProduto(char *idProduto, Produtos produtos);
 int obterPosicaoProduto(char *idProduto, Produtos produtos);
 int procurarEncomenda(char *idProduto, Encomendas encomendas);
+
+void reallocProdutos(Produtos *produtos);
 
 void listarProduto(Produto produto);
 void listarProdutos(Produtos produtos);
