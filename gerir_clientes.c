@@ -47,7 +47,7 @@ int obterPosicaoCliente(char *idCliente, Clientes clientes) {
  * @param cliente Cliente a exibir
  */
 void listarCliente(DadosPessoais cliente) {
-  if(cliente.estado ==1)
+  if(cliente.estado ==1){
     printf("\n\tID:%s \n\tNIF:%d \n\tNome:%s \n\tTelemovel:%d\n\tMorada:%s\n\tPais:%s\n", cliente.idCliente, cliente.nif, cliente.nome, cliente.telemovel, cliente.morada, cliente.pais);
   }
 }
