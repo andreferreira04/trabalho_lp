@@ -48,10 +48,10 @@ void menuGerirClientes() {
             //criarCliente();
             break;
         case 2:
-            //editarCliente();
+            editarCliente(&clientes);
             break;
         case 3:
-            //removerCliente();
+            removerCliente(&clientes, encomendas);
             break;
         case 4:
             //menuAdmin();
