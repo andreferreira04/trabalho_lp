@@ -104,6 +104,47 @@ void removerCliente(Clientes *clientes, Encomendas encomendas) {
 }
 
 /**
+* Esta função permite ao utilizador fazer o registro do cliente
+*
+* @param clientes apontador do tipo Clientes
+*/
+void criarCliente(Clientes *clientes){
+    char idCliente[MAX_ID_CLIENTE];
+
+    if (procurarCliente(idCliente, *clientes) != 1){//Se nao existir o cliente
+        
+        /**
+        int codigo = clientes->numClientes;
+        codigo++;
+        strcpy(clientes->cliente[clientes->numClientes].idCliente, codigo);
+        */
+        lerString(clientes->cliente[clientes->numClientes].nome, MAX_NOME_CLIENTE, MSG_OBTER_NOME);
+        lerString(clientes->cliente[clientes->numClientes].morada, MAX_MORADA, MSG_OBTER_MORADA);
+        lerString(clientes->cliente[clientes->numClientes].pais, MAX_PAIS, MSG_OBTER_PAIS);
+        clientes->cliente[clientes->numClientes].nif = obterInt(MSG_OBTER_NIF,MIN_NIF,MAX_NIF);
+        clientes->cliente[clientes->numClientes].telemovel = obterInt(MSG_OBTER_TELEMOVEL,MIN_TELEMOVEL,MAX_TELEMOVEL);
+        clientes->numClientes++;
+    } else{
+        puts("ERRO_CLIENTE_JA_EXISTE");
+    }
+}
+
+/**
+* Esta função permite ao utilizador apagar os dados do cliente
+*
+* @param cliente apontador do tipo DadosPessoais
+*/
+void apagarDadosCliente(DadosPessoais *cliente) {
+
+    cliente->nif = cliente->telemovel = 0;
+    strcpy(cliente->idCliente, "");
+    strcpy(cliente->morada, "");
+    strcpy(cliente->nome, "");
+    strcpy(cliente->pais, "");
+}
+
+
+/**
  * Esta função permite ao utilizador editar informações de um cliente
  * 
  * @param clientes apontador do tipo Clientes
