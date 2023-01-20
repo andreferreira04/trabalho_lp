@@ -4,6 +4,7 @@
 #include "gerir_produtos.h"
 
 #define ERRO_CLIENTE_NAO_EXISTE   "O cliente não existe na lista."
+#define ERRO_CLIENTE_JA_EXISTE "O clinte já existe na lista."
 #define PRINTF_EDIT_CLIENTE "Escreva o ID do cliente que deseja editar. Escreva '0' para sair.\n"
 #define PRINTF_REM_CLIENTE "Escreva o ID do cliente que deseja remover. Escreva '0' para sair.\n"
 
@@ -53,6 +54,9 @@ int obterPosicaoCliente(char *idCliente, Clientes clientes);
 
 void listarCliente(DadosPessoais cliente);
 void listarClientes(Clientes clientes);
+
+void criarCliente(Clientes *clientes);
+void apagarDadosCliente(DadosPessoais *cliente);
 
 void removerCliente(Clientes *clientes, Encomendas encomendas);
 void editarCliente(Clientes *clientes);
