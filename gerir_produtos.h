@@ -8,8 +8,8 @@
 #ifndef GERIR_PRODUTOS_H
 #define GERIR_PRODUTOS_H
 
-#define MAX_PRODUTOS 2
-#define MAX_ENCOMENDAS 30
+#define NUM_PRODUTOS 2
+#define NUM_ENCOMENDAS 2
 #define NUM_MATERIAIS 20
 
 #define ERRO_PRODUTO_NAO_EXISTE "O produto nao existe!"
@@ -22,7 +22,7 @@
 
 
 typedef struct {
-    char codMaterial[7];
+    char codMaterial[TAM_MATERIAL];
     char descricao[30];
     int quantidade;
     char unidade[5];
@@ -51,7 +51,7 @@ typedef struct {
 
 typedef struct {
     int numEncomendas;
-    Encomenda encomenda[MAX_ENCOMENDAS];
+    Encomenda *encomenda;
 } Encomendas;
 
 
@@ -60,6 +60,7 @@ int obterPosicaoProduto(char *idProduto, Produtos produtos);
 int procurarEncomenda(char *idProduto, Encomendas encomendas);
 
 void reallocProdutos(Produtos *produtos);
+void reallocEncomendas(Encomendas *encomendas);
 
 void listarProduto(Produto produto);
 void listarProdutos(Produtos produtos);

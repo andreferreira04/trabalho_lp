@@ -8,6 +8,7 @@
 #include "gerir_produtos.h"
 
 extern int tam_struct_produtos;
+extern int tam_struct_encomendas;
 
 /**
  * Esta função procura se um certo produto existe
@@ -58,8 +59,13 @@ int procurarEncomenda(char *idProduto, Encomendas encomendas) {
 }
 
 void reallocProdutos(Produtos *produtos) {
-    tam_struct_produtos = produtos->numProdutos + MAX_PRODUTOS;
+    tam_struct_produtos = produtos->numProdutos + NUM_PRODUTOS;
     produtos->produto = (Produto*) realloc(produtos->produto, tam_struct_produtos * sizeof(Produto));
+}
+
+void reallocEncomendas(Encomendas *encomendas) {
+    tam_struct_encomendas = encomendas->numEncomendas + NUM_ENCOMENDAS;
+    encomendas->encomenda = (Encomenda*) realloc(encomendas->encomenda, tam_struct_encomendas * sizeof(Encomenda));
 }
 
 
@@ -189,6 +195,10 @@ void loadProdutos (Produtos *produtos) {
             i++;
         }
         count++;
+        
+        if (count == tam_struct_produtos) {
+            reallocProdutos(produtos);
+        }
     }
     produtos->numProdutos = count;
 
@@ -231,6 +241,11 @@ void loadEncomendas (Encomendas *encomendas) {
             token = strtok(NULL, delim);
         }
         count++;
+        encomendas->numEncomendas = count;
+            
+        if (count == tam_struct_encomendas) {
+            reallocEncomendas(encomendas);
+        }
     }
     encomendas->numEncomendas = count;
 
@@ -309,6 +324,11 @@ void registarEncomenda (Produtos produtos, Encomendas *encomendas) {
                 char data[10];
                 
                 sprintf(data, "%d/%d/%d", dd,mm,yy);
+                
+                
+                if (encomendas->numEncomendas == tam_struct_encomendas) {
+                    reallocEncomendas(encomendas);
+                }
                 
                 strlcpy(encomendas->encomenda[encomendas->numEncomendas].idCliente, idCliente, TAM_IDCLIENTE);
                 strlcpy(encomendas->encomenda[encomendas->numEncomendas].idProduto, idProduto, TAM_IDPRODUTO);

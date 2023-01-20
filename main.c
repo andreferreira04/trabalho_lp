@@ -25,9 +25,10 @@
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
 
 
-int tam_struct_produtos = MAX_PRODUTOS;
+int tam_struct_produtos = NUM_PRODUTOS;
+int tam_struct_encomendas = NUM_ENCOMENDAS;
+
 Produtos produtos = {};
-//Produtos *produtos;
 Encomendas encomendas = {};
 Material materiais = {};
 Clientes clientes = {};
@@ -134,7 +135,8 @@ void menuPrincipal() {
 }
 
 int main() {
-    produtos.produto = (Produto *) malloc(MAX_PRODUTOS * sizeof(Produto));
+    produtos.produto = (Produto *) malloc(NUM_PRODUTOS * sizeof(Produto));
+    encomendas.encomenda = (Encomenda *) malloc(NUM_ENCOMENDAS * sizeof(Encomenda));
     
     
     importExcel(&produtos, &materiais);
@@ -149,6 +151,7 @@ int main() {
     uploadEncomendas(&encomendas);
     
     free(produtos.produto);
+    free(encomendas.encomenda);
     
     return 0;
 }
