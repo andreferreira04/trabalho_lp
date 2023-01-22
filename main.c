@@ -27,11 +27,11 @@
 
 int tam_struct_produtos = NUM_PRODUTOS;
 int tam_struct_encomendas = NUM_ENCOMENDAS;
-int tam_struct_clientes = MAX_CLIENTES;
+int tam_struct_materiais = NUM_MATERIAIS;
 
 Produtos produtos = {};
 Encomendas encomendas = {};
-Material materiais = {};
+Materiais materiais = {};
 Clientes clientes = {};
 
 void menuCliente() {
@@ -87,7 +87,7 @@ void menuGerirProdutos() {
 void menuGerirProducao(){
     switch (obterInt(MENU_GERIR_PRODUCAO_MSG, 0, 2)){
         case 1:
-            obterLista();
+            obterLista(&encomendas, &produtos, &materiais);
             break;
         case 0:
             return;
@@ -138,10 +138,14 @@ void menuPrincipal() {
 int main() {
     produtos.produto = (Produto *) malloc(NUM_PRODUTOS * sizeof(Produto));
     encomendas.encomenda = (Encomenda *) malloc(NUM_ENCOMENDAS * sizeof(Encomenda));
+    //materiais.material = (Material *) malloc(NUM_MATERIAIS * sizeof(Material));
+    
     
     
     importExcel(&produtos, &materiais);
-        
+    
+    listarProdutos(produtos);
+
     
     loadClientes(&clientes);
     //loadProdutos(&produtos);
@@ -153,6 +157,7 @@ int main() {
     
     free(produtos.produto);
     free(encomendas.encomenda);
+    //free(materiais.material);
     
     return 0;
 }

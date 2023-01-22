@@ -1,7 +1,7 @@
 /*
  * @file gerir_produtos.h
  * @author André Ferreira, Paulo Coelho, Tiago Coelho
- * @date 12 Janeiro 2023
+ * @date 23 Janeiro 2023
  * 
 */
 
@@ -10,7 +10,7 @@
 
 #define NUM_PRODUTOS 2
 #define NUM_ENCOMENDAS 2
-#define NUM_MATERIAIS 20
+#define NUM_MATERIAIS 30
 
 #define ERRO_PRODUTO_NAO_EXISTE "O produto nao existe!"
 #define PRINTF_REG_ENCOMENDA "Escreva os ID´s dos produtos. Digite '0' para terminar.\n"
@@ -20,21 +20,29 @@
 #define TAM_MATERIAL 7
 #define DELIMITADOR ";"
 
+struct date {
+    int dd, mm, yy;
+};
 
 typedef struct {
     char codMaterial[TAM_MATERIAL];
-    char descricao[30];
-    int quantidade;
-    char unidade[5];
+    char descricao[255];
 } Material;
 
 typedef struct {
+    int numMateriais;
+    Material material[NUM_MATERIAIS];
+} Materiais;
+
+typedef struct {
     char idProduto[TAM_IDPRODUTO];
-    char nomeProduto[30];
-    char dimensoesProduto[20];
+    char nomeProduto[255];
+    char dimensoesProduto[255];
     int precoProduto;
     int estado; // 0 - inativo, 1 - ativo
     char materiais[NUM_MATERIAIS][TAM_MATERIAL];
+    int quantidades[NUM_MATERIAIS];
+    char unidades[NUM_MATERIAIS];
     int numMateriais;
 } Produto;
 
@@ -58,9 +66,12 @@ typedef struct {
 int procurarProduto(char *idProduto, Produtos produtos);
 int obterPosicaoProduto(char *idProduto, Produtos produtos);
 int procurarEncomenda(char *idProduto, Encomendas encomendas);
+int procurarMaterial(char *codMaterial, Materiais materiais);
+int obterPosicaoMaterial(char *codMaterial, Materiais materiais);
 
 void reallocProdutos(Produtos *produtos);
 void reallocEncomendas(Encomendas *encomendas);
+//void reallocMateriais(Materiais *materiais);
 
 void listarProduto(Produto produto);
 void listarProdutos(Produtos produtos);
@@ -76,6 +87,6 @@ void uploadEncomendas(Encomendas *encomendas);
 
 void registarEncomenda(Produtos produtos, Encomendas *encomendas);
 
-void importExcel(Produtos *produtos, Material *material);
+void importExcel(Produtos *produtos, Materiais *materiais);
 
 #endif /* GERIR_PRODUTOS_H */

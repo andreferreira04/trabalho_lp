@@ -7,47 +7,73 @@
 #include "input.h"
 #include "gerir_produtos.h"
 
-int procurarEncomenda2(char *data, Encomendas encomendas) {
-    for (int i = 0; i < encomendas.numEncomendas; i++) {
-        if (strcmp(encomendas.encomenda[i].data, data) == 0) { //encontrou
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int obterPosicaoEncomenda(char *data, Encomendas encomendas) {
-    for (int i = 0; i < encomendas.numEncomendas; i++) {
-        if (strcmp(encomendas.encomenda[i].data, data) == 0) { //encontrou um produto ativo
-            return i;
-        }
-    }
-    return -1;
-}
-
-void obterLista(Encomendas *encomendas) {
-    int j, i, d, m, y;
+void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais) {
+    int d, m, y;
     char data[30];
+    int count_materiais[materiais->numMateriais];
+    char codMaterial[TAM_MATERIAL];
+    for (int i = 0; i < materiais->numMateriais; i++) {
+        count_materiais[i] = 0;
+    }
 
     do {
-        printf("Escreva o primeiro dia da semana que quer analisar (DD/MM/AAAA):");
+        printf("Escreva um dia da semana que quer analisar (DD/MM/AAAA):");
         scanf("%d/%d/%d", &d, &m, &y);
     } while (!verificaData(d, m, y));
-
-    for (i = 0; i < 8; i++) {
-        struct tm t = {0};
-        t.tm_mday = d;
+    
+    struct tm t = {};
+    
+    for (int i = 0; i < 7; i++) {
+        t.tm_mday = d - diaDaSemana(d, m, y);
         t.tm_mon = m - 1;
         t.tm_year = y - 1900;
         t.tm_mday += i;
         mktime(&t);
         strftime(data, 30, "%d/%m/%Y", &t);
-        puts(data);
-        /*if (procurarEncomenda2(data, *encomendas) == 1) { // se o produto existir
-            int pos = obterPosicaoEncomenda(data, *encomendas);
-                for (int i = pos; i < encomendas->numEncomendas - 1; i++) {
-                    
+        
+        struct date d1 = {t.tm_mday, t.tm_mon + 1, t.tm_year + 1900};
+        struct date d2 = {};
+        int count;
+        
+        for (int j = 0; j < encomendas->numEncomendas; j++) {
+            char tmpdate[11];
+            for (int k = 0; k < strlen(encomendas->encomenda[j].data); k++) {
+                tmpdate[k] = encomendas->encomenda[j].data[k];
+            }
+            
+            char *token = strtok(tmpdate, "/");
+            count = 0;
+                        
+            while (token != NULL) {
+                switch (count) {
+                    case 0: d2.dd = atoi(token);break;
+                    case 1: d2.mm = atoi(token);break;
+                    case 2: d2.yy = atoi(token);break;
                 }
-            }*/
+                count++;
+                token = strtok(NULL, "/");
+            }
+            if (date_cmp(d1, d2) == 1) { //se uma encomenda está dentro da semana escolhida
+                int posProduto = obterPosicaoProduto(encomendas->encomenda[j].idProduto, *produtos); //2,   3
+                
+                for (int k = 0; k < produtos->produto[posProduto].numMateriais; k++) {                    
+                    strcpy(codMaterial, produtos->produto[posProduto].materiais[k]); // "M0022"
+                    int posMaterial = obterPosicaoMaterial(codMaterial, *materiais);
+                    
+                    if (posMaterial != -1) {
+                        if (produtos->produto[posProduto].unidades[k] == 'P') {
+                            count_materiais[posMaterial] += produtos->produto[posProduto].quantidades[k] * 2;
+                        }
+                        else {
+                            count_materiais[posMaterial] += produtos->produto[posProduto].quantidades[k];
+                        }
+                    }
+                }
+            }
         }
     }
+    
+    for (int i = 0; i < materiais->numMateriais; i++) {
+        printf("%s (%s): %d (unidades)\n", materiais->material[i].codMaterial, materiais->material[i].descricao, count_materiais[i]);
+    }
+}

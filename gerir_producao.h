@@ -1,19 +1,14 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cFiles/file.h to edit this template
- */
-
-/* 
- * File:   gerir_producao.h
- * Author: paulo
- *
- * Created on 16 de dezembro de 2022, 10:33
- */
+ * @file gerir_produtos.h
+ * @author André Ferreira, Paulo Coelho, Tiago Coelho
+ * @date 23 Janeiro 2023
+ * 
+*/
 
 #ifndef GERIR_PRODUCAO_H
 #define GERIR_PRODUCAO_H
 
-void obterLista();
+void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais);
 
 #endif
 

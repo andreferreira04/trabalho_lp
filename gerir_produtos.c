@@ -9,6 +9,7 @@
 
 extern int tam_struct_produtos;
 extern int tam_struct_encomendas;
+extern int tam_struct_materiais;
 
 /**
  * Esta função procura se um certo produto existe
@@ -58,6 +59,25 @@ int procurarEncomenda(char *idProduto, Encomendas encomendas) {
     return 0;
 }
 
+int procurarMaterial(char *codMaterial, Materiais materiais) {
+    for (int i = 0; i < materiais.numMateriais; i++) {
+        if (strcmp(materiais.material[i].codMaterial, codMaterial) == 0) { //encontrou um material
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int obterPosicaoMaterial(char *codMaterial, Materiais materiais) {
+    for (int i = 0; i < materiais.numMateriais; i++) {
+        if (strcmp(materiais.material[i].codMaterial, codMaterial) == 0) { //encontrou um material
+            return i;
+        }
+    }
+    return -1;
+}
+
+
 void reallocProdutos(Produtos *produtos) {
     tam_struct_produtos = produtos->numProdutos + NUM_PRODUTOS;
     produtos->produto = (Produto*) realloc(produtos->produto, tam_struct_produtos * sizeof(Produto));
@@ -67,6 +87,11 @@ void reallocEncomendas(Encomendas *encomendas) {
     tam_struct_encomendas = encomendas->numEncomendas + NUM_ENCOMENDAS;
     encomendas->encomenda = (Encomenda*) realloc(encomendas->encomenda, tam_struct_encomendas * sizeof(Encomenda));
 }
+
+/*void reallocMateriais(Materiais *materiais) {
+    tam_struct_materiais = materiais->numMateriais + NUM_MATERIAIS;
+    materiais->material = (Material*) realloc(materiais->material, tam_struct_materiais * sizeof(Material));
+}*/
 
 
 /**
@@ -79,7 +104,7 @@ void listarProduto (Produto produto) {
         printf("%s: \n\tNome: %s \n\tDimensoes: %s \n\tPreco: %d\n", produto.idProduto, produto.nomeProduto, produto.dimensoesProduto, produto.precoProduto);
         printf("\tMateriais: ");
         for (int i = 0; i < produto.numMateriais; i++) {
-            printf("%s ", produto.materiais[i]);
+            printf("%s(%c) ", produto.materiais[i], produto.unidades[i]);
         }
         printf("\n\n");
     }
@@ -344,12 +369,12 @@ void registarEncomenda (Produtos produtos, Encomendas *encomendas) {
  * Função que permite importar dados de um ficheiro do tipo .csv
  * 
  * @param produtos apontador para a struct do tipo Produtos
- * @param material apontador para a struct do tipo Material
+ * @param materiais apontador para a struct do tipo Materiais
  */
-void importExcel(Produtos *produtos, Material *material) {
+void importExcel(Produtos *produtos, Materiais *materiais) {
     FILE *fp;
-    int i, count_materiais = 0, count_produtos = 0;
-    char * line = NULL;
+    int i, count_materiais = 0, count_produtos = 0, num_materiais = 0;
+    char * line = NULL, procurarCod[TAM_MATERIAL];
     size_t len = 0;
     ssize_t read;
     
@@ -378,17 +403,22 @@ void importExcel(Produtos *produtos, Material *material) {
                         produtos->produto[count_produtos].precoProduto = atoi(token);
                         break;
                     case 4:
-                        strncpy(material[count_materiais].codMaterial, token, 20);
+                        strcpy(procurarCod, token);
                         strncpy(produtos->produto[count_produtos].materiais[count_materiais], token, 20);
+                        if (procurarMaterial(procurarCod, *materiais) == 0) { // se noa encontrar, adicionar
+                            strncpy(materiais->material[num_materiais].codMaterial, token, 20);
+                            num_materiais++;
+                        }
                         break;
                     case 5:
-                        strncpy(material[count_materiais].descricao, token, 20);
+                        if (procurarMaterial(procurarCod, *materiais) == 0)
+                            strncpy(materiais->material[num_materiais-1].descricao, token, 20);
                         break;
                     case 6:
-                        material[count_materiais].quantidade = atoi(token);
+                        produtos->produto[count_produtos].quantidades[count_materiais] = atoi(token);
                         break;
                     case 7:
-                        strncpy(material[count_materiais].unidade, token, 20);
+                        produtos->produto[count_produtos].unidades[count_materiais] = token[0];
                         break;
                 }
                 token = strtok(NULL, delim);
@@ -397,6 +427,8 @@ void importExcel(Produtos *produtos, Material *material) {
             count_produtos++;
             count_materiais++;
             produtos->numProdutos = count_produtos;
+            produtos->produto[count_produtos-1].numMateriais = count_materiais;
+            materiais->numMateriais = num_materiais;
                  
             if (count_produtos == tam_struct_produtos) {
                 reallocProdutos(produtos);
@@ -407,17 +439,22 @@ void importExcel(Produtos *produtos, Material *material) {
             while(token != NULL) {
                 switch (i) {
                     case 0:
-                        strncpy(material[count_materiais].codMaterial, token, 20);
+                        strcpy(procurarCod, token);
                         strncpy(produtos->produto[count_produtos-1].materiais[count_materiais], token, 20);
+                        if (procurarMaterial(procurarCod, *materiais) == 0) {
+                            strncpy(materiais->material[num_materiais].codMaterial, token, 20);
+                            num_materiais++;
+                        }
                         break;
                     case 1:
-                        strncpy(material[count_materiais].descricao, token, 20);
+                        if (procurarMaterial(procurarCod, *materiais) == 0)
+                            strncpy(materiais->material[num_materiais-1].descricao, token, 20);
                         break;
                     case 2:
-                        material[count_materiais].quantidade = atoi(token);
+                        produtos->produto[count_produtos-1].quantidades[count_materiais] = atoi(token);
                         break;
                     case 3:
-                        strncpy(material[count_materiais].unidade, token, 20);
+                        produtos->produto[count_produtos-1].unidades[count_materiais] = token[0];
                         break;
                 }
                 token = strtok(NULL, delim);
@@ -428,5 +465,6 @@ void importExcel(Produtos *produtos, Material *material) {
         }
     }
     produtos->numProdutos = count_produtos;
+    materiais->numMateriais = num_materiais;
     fclose(fp);
 }

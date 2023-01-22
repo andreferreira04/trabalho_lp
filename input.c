@@ -76,3 +76,15 @@ int verificaData (int dia, int mes, int ano) {
         return 0;
     }
 }
+
+int date_cmp(struct date d1, struct date d2) {
+    if (d1.dd == d2.dd && d1.mm == d2.mm && d1.yy == d2.yy)
+        return 1;
+    else return -1;
+}
+
+int diaDaSemana(int d, int m, int y) {
+    static int t[] = { 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 };
+    y -= m < 3;
+    return (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) % 7;
+}
