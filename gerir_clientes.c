@@ -76,7 +76,7 @@ void listarClientes(Clientes clientes) {
 
 /**
  * 
- * @param produtos apontador da estrtura de dados Clientes
+ * @param clientes apontador da estrtura de dados Clientes
  * @param encomendas estrutura do tipo Encomendas
  */
 void removerCliente(Clientes *clientes, Encomendas encomendas) {
