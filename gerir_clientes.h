@@ -52,6 +52,8 @@ typedef struct {
 int procurarCliente(char *idCliente, Clientes clientes);
 int obterPosicaoCliente(char *idCliente, Clientes clientes);
 
+void reallocClientes(Clientes *clientes);
+
 void listarCliente(DadosPessoais cliente);
 void listarClientes(Clientes clientes);
 
