@@ -7,6 +7,8 @@
 #include "gerir_clientes.h"
 #include "gerir_produtos.h"
 
+extern int tam_struct_clientes;
+
 /**
  * Esta função procura se um certo cliente existe
  * 
@@ -37,6 +39,11 @@ int obterPosicaoCliente(char *idCliente, Clientes clientes) {
         }
     }
     return -1;
+}
+
+void reallocClientes(Clientes *clientes){
+    tam_struct_clientes = clientes->numClientes + MAX_CLIENTES;
+    clientes->cliente = (DadosPessoais*) realloc(clientes->cliente, tam_struct_clientes * sizeof(DadosPessoais));  
 }
 
 
@@ -217,6 +224,10 @@ void loadClientes(Clientes *clientes) {
             i++;
         }
         count++;
+        
+        if (count == tam_struct_clientes) {
+            reallocClientes(clientes);
+        }  
     }
     clientes->numClientes = count;
 
