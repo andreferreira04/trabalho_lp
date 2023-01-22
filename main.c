@@ -27,6 +27,7 @@
 
 int tam_struct_produtos = NUM_PRODUTOS;
 int tam_struct_encomendas = NUM_ENCOMENDAS;
+int tam_struct_clientes = MAX_CLIENTES;
 
 Produtos produtos = {};
 Encomendas encomendas = {};
