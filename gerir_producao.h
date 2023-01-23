@@ -10,6 +10,7 @@
 
 void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais);
 void obterListaProdutos(Encomendas *encomendas, Produtos *produtos);
+void obterListaClientes(Encomendas *encomendas, Clientes *clientes);
 
 #endif
 

@@ -21,7 +21,7 @@
 #define MENU_GERIR_PRODUTOS_MSG "----------\nGestao de produtos\n----------\n1.Editar produto\n"\
                                 "2.Remover produto\n3.Guardar alteracoes\n0.Sair\nSelecione uma opcao (0-3):"
 #define MENU_GERIR_PRODUCAO_MSG "----------\nGestao da producao\n----------\n1.Obter lista de componentes"\
-                                " de encomendas (por semana)\n2.Obter lista dos produtos mais vendidos\n0.Sair\nSelecione uma opcao (0-2):"
+                                " de encomendas (por semana)\n2.Obter lista dos produtos mais vendidos\n3.Obter lista de clientes mais ativos\n0.Sair\nSelecione uma opcao (0-2):"
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
 
 
@@ -86,12 +86,15 @@ void menuGerirProdutos() {
 }
 
 void menuGerirProducao(){
-    switch (obterInt(MENU_GERIR_PRODUCAO_MSG, 0, 2)){
+    switch (obterInt(MENU_GERIR_PRODUCAO_MSG, 0, 3)){
         case 1:
             obterLista(&encomendas, &produtos, &materiais);
             break;
         case 2:
             obterListaProdutos(&encomendas, &produtos);
+            break;
+        case 3:
+            obterListaClientes(&encomendas, &clientes);
             break;
         case 0:
             return;

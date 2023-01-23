@@ -174,9 +174,7 @@ void editarProduto(Produtos *produtos) {
     sprintf(tmpstr, "%d", produtos->numProdutos);
     strlcat(print_opcao, tmpstr, 30);
     strlcat(print_opcao, ") (Escreva '0' para sair): ", 60);
-    
-    printf("%d", produtos->numProdutos);
-    
+        
     int opcao = obterInt(print_opcao, 0, produtos->numProdutos) - 1;
     
     if (opcao == -1) return;

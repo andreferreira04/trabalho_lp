@@ -122,7 +122,6 @@ void criarCliente(Clientes *clientes){
     memmove(tmpstr, tmpstr+1, strlen(tmpstr));
 
     sprintf(idClienteNovo, "C%05d", atoi(tmpstr) + 1);
-    printf("%s", idClienteNovo);
 
     if (clientes->numClientes == tam_struct_clientes) {
         reallocClientes(clientes);

@@ -6,6 +6,7 @@
 
 #include "input.h"
 #include "gerir_produtos.h"
+#include "gerir_clientes.h"
 
 /**
  * Esta função lista as encomendas para entregar numa dada semana
@@ -88,7 +89,7 @@ void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais
 
 
 /**
- * Esta função lista o número de encomendas de todos os produtos, ordenadamente
+ * Esta função lista o número de encomendas de todos os produtos
  * 
  * @param encomendas apontador para struct do tipo Encomendas para ir buscar as encomendas
  * @param produtos apontador para struct do tipo Produtos para obter informações sobre os produtos
@@ -101,9 +102,7 @@ void obterListaProdutos(Encomendas *encomendas, Produtos *produtos) {
         count_produtos[i] = 0;
         array_produtos[i] = 0;
     }
-    
-    printf("%d\n", produtos->numProdutos);
-    
+        
     for (int i = 0; i < encomendas->numEncomendas; i++) {
         char tmpstr[7];
         strcpy(tmpstr, encomendas->encomenda[i].idProduto);
@@ -113,22 +112,36 @@ void obterListaProdutos(Encomendas *encomendas, Produtos *produtos) {
         count_produtos[obterPosicaoProduto(encomendas->encomenda[i].idProduto, *produtos)]++;
     }
     
-    int temp;
-    for (int i = 0; i < produtos->numProdutos; i++) {
-        for (int j = i+1; j < produtos->numProdutos; j++) {
-            if(count_produtos[i] < count_produtos[j]) {
-                temp = count_produtos[i];
-                count_produtos[i] = count_produtos[j];
-                count_produtos[j] = temp;
-                
-                temp = array_produtos[i];    
-                array_produtos[i] = array_produtos[j];    
-                array_produtos[j] = temp;  
-            }
-        }
-    }
-    
     for (int i = 0; i < produtos->numProdutos; i++) {
         printf("P%05d: %d encomendas totais\n", array_produtos[i],count_produtos[i]);
+    }
+}
+
+/**
+ * Esta função lista o número de encomendas pro cliente
+ * 
+ * @param encomendas apontador para struct do tipo Encomendas para ir buscar as encomendas
+ * @param clientes apontador para struct do tipo Clientes para obter informações sobre os clientes
+ */
+void obterListaClientes(Encomendas *encomendas, Clientes *clientes) {
+    int count_clientes[clientes->numClientes];
+    int array_clientes[clientes->numClientes];
+    
+    for (int i = 0; i < clientes->numClientes; i++) {
+        count_clientes[i] = 0;
+        array_clientes[i] = 0;
+    }
+        
+    for (int i = 0; i < encomendas->numEncomendas; i++) {
+        char tmpstr[7];
+        strcpy(tmpstr, encomendas->encomenda[i].idCliente);
+        memmove(tmpstr, tmpstr+1, strlen(tmpstr));
+                
+        count_clientes[obterPosicaoCliente(encomendas->encomenda[i].idCliente, *clientes)]++;
+        array_clientes[obterPosicaoCliente(encomendas->encomenda[i].idCliente, *clientes)] = atoi(tmpstr);
+    }
+    
+    for (int i = 0; i < clientes->numClientes; i++) {
+        printf("C%05d: %d encomendas totais\n", array_clientes[i],count_clientes[i]);
     }
 }
