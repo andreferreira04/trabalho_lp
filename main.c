@@ -21,7 +21,7 @@
                                 "2.Remover produto\n3.Guardar alteracoes\n4.Obter lista de produtos e a sua atividade\n0.Sair\nSelecione uma opcao (0-4):"
 #define MENU_GERIR_PRODUCAO_MSG "----------\nGestao da producao\n----------\n1.Obter lista de componentes"\
                                 " de encomendas (por semana)\n2.Obter lista do retorno financeiro(mes a mes)\n3.Obter lista de vendas conseguidas (mes a mes)"\
-                                "4.Obter lista de encomendas por pais\n0.Sair\nSelecione uma opcao (0-4):"
+                                "\n4.Obter lista de encomendas por pais\n0.Sair\nSelecione uma opcao (0-4):"
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
 
 
