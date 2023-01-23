@@ -16,13 +16,13 @@
 #define MENU_CLIENTE_MSG "----------\nMenu do cliente\n----------\n1.Registar encomenda\n0.Sair\n"\
                          "Selecione uma opcao (0-1):"
 #define MENU_GERIR_CLIENTES_MSG "----------\nGestao de clientes\n----------\n1.Criar cliente\n"\
-                                "2.Editar cliente\n3.Remover cliente\n4.Guardar alteracoes\n0.Sair\n"\
-                                "Selecione uma opcao (0-4):"
+                                "2.Editar cliente\n3.Remover cliente\n4.Guardar alteracoes\n5.Obter lista de clientes e a sua atividade\n0.Sair\n"\
+                                "Selecione uma opcao (0-5):"
 #define MENU_GERIR_PRODUTOS_MSG "----------\nGestao de produtos\n----------\n1.Editar produto\n"\
-                                "2.Remover produto\n3.Guardar alteracoes\n0.Sair\nSelecione uma opcao (0-3):"
+                                "2.Remover produto\n3.Guardar alteracoes\n4.Obter lista de produtos e a sua atividade\n0.Sair\nSelecione uma opcao (0-4):"
 #define MENU_GERIR_PRODUCAO_MSG "----------\nGestao da producao\n----------\n1.Obter lista de componentes"\
-                                " de encomendas (por semana)\n2.Obter lista dos produtos mais vendidos\n3.Obter lista de clientes mais ativos"\
-                                "\n4.Obter lista do retorno financeiro(mes a mes)\n5.Obter lista de vendas conseguidas (por mes)\n0.Sair\nSelecione uma opcao (0-5):"
+                                " de encomendas (por semana)\n2.Obter lista do retorno financeiro(mes a mes)\n3.Obter lista de vendas conseguidas (por mes)"\
+                                "\n0.Sair\nSelecione uma opcao (0-3):"
 #define MENU_MSG_INVALIDA "Insira uma opcao valida!"
 
 
@@ -49,7 +49,7 @@ void menuCliente() {
 }
 
 void menuGerirClientes() {
-    switch (obterInt(MENU_GERIR_CLIENTES_MSG, 0, 4)) {
+    switch (obterInt(MENU_GERIR_CLIENTES_MSG, 0, 5)) {
         case 1:
             criarCliente(&clientes);
             break;
@@ -61,15 +61,16 @@ void menuGerirClientes() {
             break;
         case 4:
             uploadClientes(&clientes);
-        case 0:
-            return;
+        case 5:
+            obterListaClientes(&encomendas, &clientes);
+            break;
         default:
             break;
     }
 }
 
 void menuGerirProdutos() {
-    switch (obterInt(MENU_GERIR_PRODUTOS_MSG, 0, 3)) {
+    switch (obterInt(MENU_GERIR_PRODUTOS_MSG, 0, 4)) {
         case 1:
             editarProduto(&produtos);
             break;
@@ -79,8 +80,9 @@ void menuGerirProdutos() {
         case 3:
             uploadProdutos(&produtos);
             break;
-        case 0:
-            return;
+        case 4:
+            obterListaProdutos(&encomendas, &produtos);
+            break;
         default:
             break;
     }
@@ -92,15 +94,9 @@ void menuGerirProducao(){
             obterLista(&encomendas, &produtos, &materiais);
             break;
         case 2:
-            obterListaProdutos(&encomendas, &produtos);
-            break;
-        case 3:
-            obterListaClientes(&encomendas, &clientes);
-            break;
-        case 4:
             retornoMeses(&encomendas, &produtos);
             break;
-        case 5:
+        case 3:
             vendasPorMes(&encomendas, &produtos);
             break;
         case 0:
