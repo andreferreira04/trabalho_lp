@@ -8,6 +8,8 @@
 #ifndef GERIR_PRODUCAO_H
 #define GERIR_PRODUCAO_H
 
+#include "gerir_clientes.h"
+
 void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais);
 void obterListaProdutos(Encomendas *encomendas, Produtos *produtos);
 void obterListaClientes(Encomendas *encomendas, Clientes *clientes);
