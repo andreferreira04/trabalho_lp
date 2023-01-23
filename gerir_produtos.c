@@ -101,7 +101,7 @@ void listarProduto (Produto produto) {
         printf("%s: \n\tNome: %s \n\tDimensoes: %s \n\tPreco: %d\n", produto.idProduto, produto.nomeProduto, produto.dimensoesProduto, produto.precoProduto);
         printf("\tMateriais: ");
         for (int i = 0; i < produto.numMateriais; i++) {
-            printf("%s(%c) ", produto.materiais[i], produto.unidades[i]);
+            printf("%s ) ", produto.materiais[i];
         }
         printf("\n\n");
     }
