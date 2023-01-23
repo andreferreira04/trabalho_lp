@@ -7,6 +7,13 @@
 #include "input.h"
 #include "gerir_produtos.h"
 
+/**
+ * Esta função lista as encomendas para entregar numa dada semana
+ * 
+ * @param encomendas struct do tipo Encomendas, onde encontra as encomendas dentro dessa semana
+ * @param produtos struct do tipo Produtos, para buscar informação sobre os produtos encomendados
+ * @param materiais struct do tipo Materiais, para contar a quantidade demateriais
+ */
 void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais) {
     int d, m, y;
     char data[30];
@@ -57,7 +64,7 @@ void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais
                 int posProduto = obterPosicaoProduto(encomendas->encomenda[j].idProduto, *produtos); //2,   3
                 
                 for (int k = 0; k < produtos->produto[posProduto].numMateriais; k++) {                    
-                    strcpy(codMaterial, produtos->produto[posProduto].materiais[k]); // "M0022"
+                    strcpy(codMaterial, produtos->produto[posProduto].materiais[k]);
                     int posMaterial = obterPosicaoMaterial(codMaterial, *materiais);
                     
                     if (posMaterial != -1) {
@@ -73,7 +80,8 @@ void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais
         }
     }
     
+    printf("Lista de materiais necessarios para satisfazer as encomendas da semana %d/%d/%d:\n", d, m, y);
     for (int i = 0; i < materiais->numMateriais; i++) {
-        printf("%s (%s): %d (unidades)\n", materiais->material[i].codMaterial, materiais->material[i].descricao, count_materiais[i]);
+        printf("\t%s (%s): %d\n", materiais->material[i].codMaterial, materiais->material[i].descricao, count_materiais[i]);
     }
 }

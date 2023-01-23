@@ -1,2 +1,3 @@
 C00001;266949410;Paulo Sergio Marques Coelho;930613593;Rua dos Fontanarios;Portugal;1
 C00002;229627730;Lucelia Filipa Ribeiro Marques;933628125;Rua dos Fontanarios;Portugal;1
+C00003;253228905;Andre Miguel Carvalho Ferreira;932449522;Rua do Carregal;Portugal;1

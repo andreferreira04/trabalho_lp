@@ -6,10 +6,12 @@
 
 #include "input.h"
 #include "gerir_produtos.h"
+#include "gerir_clientes.h"
 
 extern int tam_struct_produtos;
 extern int tam_struct_encomendas;
 extern int tam_struct_materiais;
+extern Clientes clientes;
 
 /**
  * Esta função procura se um certo produto existe
@@ -323,8 +325,12 @@ void uploadEncomendas (Encomendas *encomendas) {
 void registarEncomenda (Produtos produtos, Encomendas *encomendas) {    
     int dd, mm, yy;
     char idProduto[TAM_IDPRODUTO], idCliente[TAM_IDCLIENTE];
-
-    lerString(idCliente, TAM_IDCLIENTE, "Escreva o ID do cliente: ");
+    
+    
+    do {
+        lerString(idCliente, TAM_IDCLIENTE, "Escreva o ID do cliente: ");
+    } while (procurarCliente(idCliente, clientes) != 1);
+    
 
     do {
         printf("Escreva a data da encomenda (DD/MM/AAAA):");

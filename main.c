@@ -50,7 +50,7 @@ void menuCliente() {
 void menuGerirClientes() {
     switch (obterInt(MENU_GERIR_CLIENTES_MSG, 0, 4)) {
         case 1:
-            //criarCliente();
+            criarCliente(&clientes);
             break;
         case 2:
             editarCliente(&clientes);
@@ -139,17 +139,11 @@ void menuPrincipal() {
 int main() {
     produtos.produto = (Produto *) malloc(NUM_PRODUTOS * sizeof(Produto));
     encomendas.encomenda = (Encomenda *) malloc(NUM_ENCOMENDAS * sizeof(Encomenda));
+    clientes.cliente = (DadosPessoais *) malloc(MAX_CLIENTES * sizeof(DadosPessoais));
     //materiais.material = (Material *) malloc(NUM_MATERIAIS * sizeof(Material));
-    
-    
-    
-    importExcel(&produtos, &materiais);
-    
-    listarProdutos(produtos);
 
-    
+    importExcel(&produtos, &materiais);
     loadClientes(&clientes);
-    //loadProdutos(&produtos);
     loadEncomendas(&encomendas);
     
     menuPrincipal();
@@ -158,6 +152,7 @@ int main() {
     
     free(produtos.produto);
     free(encomendas.encomenda);
+    free(clientes.cliente);
     //free(materiais.material);
     
     return 0;

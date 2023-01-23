@@ -1,17 +1,10 @@
-/*
- * @file gerir_clientes.h
- * @author André Ferreira, Paulo Coelho, Tiago Coelho
- * @date 23 Janeiro 2023
- * 
-*/
-
 #ifndef GERIR_CLIENTES_H
 #define GERIR_CLIENTES_H
 
 #include "gerir_produtos.h"
 
 #define ERRO_CLIENTE_NAO_EXISTE   "O cliente não existe na lista."
-#define ERRO_CLIENTE_JA_EXISTE "O clinte já existe na lista."
+#define ERRO_CLIENTE_JA_EXISTE "O cliente já existe na lista."
 #define PRINTF_EDIT_CLIENTE "Escreva o ID do cliente que deseja editar. Escreva '0' para sair.\n"
 #define PRINTF_REM_CLIENTE "Escreva o ID do cliente que deseja remover. Escreva '0' para sair.\n"
 
@@ -53,7 +46,7 @@ typedef struct cliente {
 
 typedef struct {
     int numClientes;
-    DadosPessoais cliente[MAX_CLIENTES];
+    DadosPessoais *cliente;
 } Clientes;
 
 int procurarCliente(char *idCliente, Clientes clientes);
