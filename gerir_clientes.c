@@ -230,7 +230,7 @@ void loadClientes(Clientes *clientes) {
             i++;
         }
         count++;
-        
+        clientes->numClientes = count;
         if (count == tam_struct_clientes) {
             reallocClientes(clientes);
         }  

@@ -1,3 +1,9 @@
+/*
+ * @file gerir_clientes.h
+ * @author André Ferreira, Paulo Coelho, Tiago Coelho
+ * @date 23 Janeiro 2023
+ * 
+*/
 #ifndef GERIR_CLIENTES_H
 #define GERIR_CLIENTES_H
 
@@ -8,7 +14,7 @@
 #define PRINTF_EDIT_CLIENTE "Escreva o ID do cliente que deseja editar. Escreva '0' para sair.\n"
 #define PRINTF_REM_CLIENTE "Escreva o ID do cliente que deseja remover. Escreva '0' para sair.\n"
 
-#define MAX_CLIENTES 100
+#define MAX_CLIENTES 2
 
 #define MAX_NOME_CLIENTE 60
 #define MSG_OBTER_NOME "Insira o nome do cliente: "
