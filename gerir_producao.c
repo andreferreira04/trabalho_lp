@@ -85,3 +85,50 @@ void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais
         printf("\t%s (%s): %d\n", materiais->material[i].codMaterial, materiais->material[i].descricao, count_materiais[i]);
     }
 }
+
+
+/**
+ * Esta função lista o número de encomendas de todos os produtos, ordenadamente
+ * 
+ * @param encomendas apontador para struct do tipo Encomendas para ir buscar as encomendas
+ * @param produtos apontador para struct do tipo Produtos para obter informações sobre os produtos
+ */
+void obterListaProdutos(Encomendas *encomendas, Produtos *produtos) {
+    int count_produtos[produtos->numProdutos];
+    int array_produtos[produtos->numProdutos];
+    
+    for (int i = 0; i < produtos->numProdutos; i++) {
+        count_produtos[i] = 0;
+        array_produtos[i] = 0;
+    }
+    
+    printf("%d\n", produtos->numProdutos);
+    
+    for (int i = 0; i < encomendas->numEncomendas; i++) {
+        char tmpstr[7];
+        strcpy(tmpstr, encomendas->encomenda[i].idProduto);
+        memmove(tmpstr, tmpstr+1, strlen(tmpstr));
+        
+        array_produtos[obterPosicaoProduto(encomendas->encomenda[i].idProduto, *produtos)] = atoi(tmpstr);
+        count_produtos[obterPosicaoProduto(encomendas->encomenda[i].idProduto, *produtos)]++;
+    }
+    
+    int temp;
+    for (int i = 0; i < produtos->numProdutos; i++) {
+        for (int j = i+1; j < produtos->numProdutos; j++) {
+            if(count_produtos[i] < count_produtos[j]) {
+                temp = count_produtos[i];
+                count_produtos[i] = count_produtos[j];
+                count_produtos[j] = temp;
+                
+                temp = array_produtos[i];    
+                array_produtos[i] = array_produtos[j];    
+                array_produtos[j] = temp;  
+            }
+        }
+    }
+    
+    for (int i = 0; i < produtos->numProdutos; i++) {
+        printf("P%05d: %d encomendas totais\n", array_produtos[i],count_produtos[i]);
+    }
+}

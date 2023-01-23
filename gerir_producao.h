@@ -9,6 +9,7 @@
 #define GERIR_PRODUCAO_H
 
 void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais);
+void obterListaProdutos(Encomendas *encomendas, Produtos *produtos);
 
 #endif
 
