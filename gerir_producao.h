@@ -11,7 +11,8 @@
 void obterLista(Encomendas *encomendas, Produtos *produtos, Materiais *materiais);
 void obterListaProdutos(Encomendas *encomendas, Produtos *produtos);
 void obterListaClientes(Encomendas *encomendas, Clientes *clientes);
-
+void retornoMeses(Encomendas *encomendas, Produtos *produtos);
+void vendasPorMes(Encomendas *encomendas, Produtos *produtos);
 #endif
 
 
