@@ -145,3 +145,91 @@ void obterListaClientes(Encomendas *encomendas, Clientes *clientes) {
         printf("C%05d: %d encomendas totais\n", array_clientes[i],count_clientes[i]);
     }
 }
+
+/**
+ * Esta função lista o retorno financeiro conseguido ao longo dos meses do ano atual
+ * 
+ * @param encomendas apontador para struct do tipo Encomendas para ir buscar as encomendas
+ * @param produtos apontador para struct do tipo Produtos para obter informações sobre os produtos
+ */
+void retornoMeses(Encomendas *encomendas, Produtos *produtos) {
+    int mes, ano, count;
+    int contagens_mes[12];
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    for (int i = 0; i < 13; i++) {
+        contagens_mes[i] = 0;
+    }
+
+    for (int j = 0; j < encomendas->numEncomendas; j++) {
+        char tmpdate[11];
+        count = 0;
+        for (int k = 0; k < strlen(encomendas->encomenda[j].data); k++) {
+            tmpdate[k] = encomendas->encomenda[j].data[k];
+        }
+        char *token = strtok(tmpdate, "/");
+
+        while (token != NULL) {
+            switch (count) {
+                case 1: mes = atoi(token);
+                    break;
+                case 2:
+                    ano = atoi(token);
+                    break;
+            }
+            count++;
+            token = strtok(NULL, "/");
+        }
+        if (ano == (tm.tm_year + 1900)) {
+            contagens_mes[mes - 1] += produtos->produto[obterPosicaoProduto(encomendas->encomenda[j].idProduto, *produtos)].precoProduto;
+        }
+    }
+    for (int i = 0; i < 12; i++) {
+        printf("Retorno do mes %d: %d€\n", i + 1, contagens_mes[i]);
+    }
+}
+
+/**
+ * Esta função lista as vendas conseguidas ao longo dos meses do ano atual
+ * 
+ * @param encomendas apontador para struct do tipo Encomendas para ir buscar as encomendas
+ * @param produtos apontador para struct do tipo Produtos para obter informações sobre os produtos
+ */
+void vendasPorMes(Encomendas *encomendas, Produtos *produtos) {
+    int mes, ano, count;
+    int contagens_mes[12];
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    for (int i = 0; i < 13; i++) {
+        contagens_mes[i] = 0;
+    }
+
+    for (int j = 0; j < encomendas->numEncomendas; j++) {
+        char tmpdate[11];
+        count = 0;
+        for (int k = 0; k < strlen(encomendas->encomenda[j].data); k++) {
+            tmpdate[k] = encomendas->encomenda[j].data[k];
+        }
+        char *token = strtok(tmpdate, "/");
+
+        while (token != NULL) {
+            switch (count) {
+                case 1: mes = atoi(token);
+                    break;
+                case 2:
+                    ano = atoi(token);
+                    break;
+            }
+            count++;
+            token = strtok(NULL, "/");
+        }
+        if (ano == (tm.tm_year + 1900)) {
+            contagens_mes[mes - 1] ++;
+        }
+    }
+    for (int i = 0; i < 12; i++) {
+        printf("Vendas do mes %d: %d\n", i + 1, contagens_mes[i]);
+    }
+}
