@@ -1,3 +1,10 @@
+/*
+ * @file gerir_clientes.h
+ * @author André Ferreira, Paulo Coelho, Tiago Coelho
+ * @date 23 Janeiro 2023
+ * 
+*/
+
 #ifndef GERIR_CLIENTES_H
 #define GERIR_CLIENTES_H
 
