@@ -72,7 +72,6 @@ int obterPosicaoMaterial(char *codMaterial, Materiais materiais);
 void reallocProdutos(Produtos *produtos);
 void reallocEncomendas(Encomendas *encomendas);
 
-
 void listarProduto(Produto produto);
 void listarProdutos(Produtos produtos);
 

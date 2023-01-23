@@ -233,3 +233,72 @@ void vendasPorMes(Encomendas *encomendas, Produtos *produtos) {
         printf("Vendas do mes %d: %d\n", i + 1, contagens_mes[i]);
     }
 }
+
+/**
+ * Esta função lista o número de encomendas agendadas para o ano atual, separadas por país
+ * 
+ * @param encomendas apontador para struct do tipo Encomendas para ir buscar as encomendas
+ * @param clientes apontador para struct do tipo Clientes para ir buscar os países dos clientes
+ */
+void paisesEncomenda(Encomendas *encomendas, Clientes *clientes) {
+    char paises[200][255];
+    int contagem_paises[200];
+    int i, j, adicionar, count_paises = 0;
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    
+    for (i = 0; i < 200; i++) {
+        contagem_paises[i] = 0;
+    }
+    
+    for (i = 0; i < clientes->numClientes; i++) {
+        adicionar = 1;
+        int len = sizeof(paises)/sizeof(paises[0]);
+
+        for (j = 0; j < len; ++j) {
+            if (strcmp(clientes->cliente[i].pais, paises[j]) == 0) { //ja existe
+                adicionar = 0;
+            }
+        }
+        
+        if (adicionar == 1) { //se ainda nao existe, adiciona
+            strcpy(paises[count_paises], clientes->cliente[i].pais);
+            count_paises++;
+        }
+    }
+    
+    for (i = 0; i < encomendas->numEncomendas; i++) {
+        int posCliente = obterPosicaoCliente(encomendas->encomenda[i].idCliente, *clientes), posPais = -1, ano, count = 0;
+        char pais[255], tmpdate[11];
+
+        for (int j = 0; j < strlen(encomendas->encomenda[i].data); j++) {
+            tmpdate[j] = encomendas->encomenda[i].data[j];
+        }
+        char *token = strtok(tmpdate, "/");
+
+        while (token != NULL) {
+            if (count == 2) {
+                ano = atoi(token); break;
+            }
+            count++;
+            token = strtok(NULL, "/");
+        }
+        if (ano == (tm.tm_year + 1900)) {
+            strcpy(pais, clientes->cliente[posCliente].pais);
+        
+            for (j = 0; j < count_paises; ++j) { //procurar posicao do país
+                if (strcmp(pais, paises[j]) == 0) {
+                    posPais = j;
+                    break;
+                }
+            }
+
+            contagem_paises[posPais]++;
+        }
+    }
+    
+    for (i = 0; i < count_paises; i++) {
+        printf("%s: %d encomendas\n", paises[i], contagem_paises[i]);
+    }
+}
+

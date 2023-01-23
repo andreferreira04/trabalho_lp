@@ -10,7 +10,6 @@
 
 extern int tam_struct_produtos;
 extern int tam_struct_encomendas;
-extern int tam_struct_materiais;
 extern Clientes clientes;
 
 /**
@@ -61,13 +60,6 @@ int procurarEncomenda(char *idProduto, Encomendas encomendas) {
     return 0;
 }
 
-/**
- * Esta função procura se um certo material existe
- * 
- * @param codMaterial código do material a procurar
- * @param materiais struct Materiais a procurar
- * @return 1 se o material existe, 0 se não existe
- */
 int procurarMaterial(char *codMaterial, Materiais materiais) {
     for (int i = 0; i < materiais.numMateriais; i++) {
         if (strcmp(materiais.material[i].codMaterial, codMaterial) == 0) { //encontrou um material
@@ -77,13 +69,6 @@ int procurarMaterial(char *codMaterial, Materiais materiais) {
     return 0;
 }
 
-/**
- * Esta função retorna a posicao de um certo material
- * 
- * @param codMaterial o código do material a procurar
- * @param materiais struct Materiais a procurar
- * @return a posicao do material, se nao existe retorna -1
- */
 int obterPosicaoMaterial(char *codMaterial, Materiais materiais) {
     for (int i = 0; i < materiais.numMateriais; i++) {
         if (strcmp(materiais.material[i].codMaterial, codMaterial) == 0) { //encontrou um material
@@ -93,25 +78,18 @@ int obterPosicaoMaterial(char *codMaterial, Materiais materiais) {
     return -1;
 }
 
-/**
- * A função realoca o espaço na estrutura de dados do tipo Produtos
- * 
- * @param produtos apontador da estrutura de dados Produtos
- */
+
 void reallocProdutos(Produtos *produtos) {
     tam_struct_produtos = produtos->numProdutos + NUM_PRODUTOS;
     produtos->produto = (Produto*) realloc(produtos->produto, tam_struct_produtos * sizeof(Produto));
 }
 
-/**
- * A função realoca o espaço na estrutura de dados do tipo Encomendas
- * 
- * @param encomendas apontador da estrutura de dados Encomendas
- */
 void reallocEncomendas(Encomendas *encomendas) {
     tam_struct_encomendas = encomendas->numEncomendas + NUM_ENCOMENDAS;
     encomendas->encomenda = (Encomenda*) realloc(encomendas->encomenda, tam_struct_encomendas * sizeof(Encomenda));
 }
+
+
 
 /**
  * A função recebe um dado do tipo Produto e lista as suas informações
@@ -146,7 +124,7 @@ void listarProdutos (Produtos produtos) {
 
 /**
  * 
- * @param produtos apontador da estrutura de dados Produtos
+ * @param produtos apontador da estrtura de dados Produtos
  * @param encomendas estrutura do tipo Encomendas
  */
 void removerProduto(Produtos *produtos, Encomendas encomendas) {
@@ -179,7 +157,6 @@ void removerProduto(Produtos *produtos, Encomendas encomendas) {
         }
     }
 }
-
 /**
  * Esta função permite ao utilizador editar informações de um produto
  * 
