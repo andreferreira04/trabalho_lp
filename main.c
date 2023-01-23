@@ -153,8 +153,7 @@ int main() {
     produtos.produto = (Produto *) malloc(NUM_PRODUTOS * sizeof(Produto));
     encomendas.encomenda = (Encomenda *) malloc(NUM_ENCOMENDAS * sizeof(Encomenda));
     clientes.cliente = (DadosPessoais *) malloc(MAX_CLIENTES * sizeof(DadosPessoais));
-    //materiais.material = (Material *) malloc(NUM_MATERIAIS * sizeof(Material));
-
+    
     importExcel(&produtos, &materiais);
     loadClientes(&clientes);
     loadEncomendas(&encomendas);
@@ -166,7 +165,7 @@ int main() {
     free(produtos.produto);
     free(encomendas.encomenda);
     free(clientes.cliente);
-    //free(materiais.material);
+   
     
     return 0;
 }
