@@ -87,7 +87,7 @@ void menuGerirProdutos() {
 }
 
 void menuGerirProducao(){
-    switch (obterInt(MENU_GERIR_PRODUCAO_MSG, 0, 3)){
+    switch (obterInt(MENU_GERIR_PRODUCAO_MSG, 0, 5)){
         case 1:
             obterLista(&encomendas, &produtos, &materiais);
             break;
