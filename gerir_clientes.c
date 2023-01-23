@@ -41,6 +41,11 @@ int obterPosicaoCliente(char *idCliente, Clientes clientes) {
     return -1;
 }
 
+/**
+ * A função realoca o espaço na estrutura de dados do tipo Clientes
+ * 
+ * @param clientes apontador da estrutura de dados Clientes
+ */
 void reallocClientes(Clientes *clientes){
     tam_struct_clientes = clientes->numClientes + MAX_CLIENTES;
     clientes->cliente = (DadosPessoais*) realloc(clientes->cliente, tam_struct_clientes * sizeof(DadosPessoais));  
@@ -140,21 +145,6 @@ void criarCliente(Clientes *clientes){
         reallocClientes(clientes);
     }
 }
-
-/**
-* Esta função permite ao utilizador apagar os dados do cliente
-*
-* @param cliente apontador do tipo DadosPessoais
-*/
-void apagarDadosCliente(DadosPessoais *cliente) {
-    cliente->estado = 0;
-    /*cliente->nif = cliente->telemovel = 0;
-    strcpy(cliente->idCliente, "");
-    strcpy(cliente->morada, "");
-    strcpy(cliente->nome, "");
-    strcpy(cliente->pais, "");*/
-}
-
 
 /**
  * Esta função permite ao utilizador editar informações de um cliente
