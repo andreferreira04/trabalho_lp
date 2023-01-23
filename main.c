@@ -5,7 +5,6 @@
 #include "gerir_produtos.h"
 #include "gerir_producao.h"
 #include "input.h"
-#include "tools.h"
 
 #define EMPRESA_MSG "----- MOVEIS PARA TODOS -----"
 #define MENU_PRINCIPAL_MSG "\nSelecione o seu tipo de  perfil\n----------\n1.Administrador\n2.Cliente\n"\
@@ -59,6 +58,7 @@ void menuGerirClientes() {
             break;
         case 4:
             uploadClientes(&clientes);
+            break;
         case 5:
             obterListaClientes(&encomendas, &clientes);
             break;
